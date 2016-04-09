@@ -62,7 +62,7 @@ Default initializer for nullable version produces `null`, for not-null -- throws
        val c = MyClass("some name")
        println(c.tag) // some name
        c.tag = "some tag"
-       println(c.tag) // some name
+       println(c.tag) // some tag
     }
     
 Can be used to create inner mapping distinct for instances of enclosing class:
