@@ -1,8 +1,10 @@
+package com.github.h0tk3y.kotlinFun
+
+import com.github.h0tk3y.kotlinFun.selfReference
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.util.*
-import java.lang.Character.MIN_VALUE as nullChar
 
 /**
  * Created by igushs on 1/31/16.
@@ -10,21 +12,11 @@ import java.lang.Character.MIN_VALUE as nullChar
  * Tests for [SelfReference] class.
  */
 
-fun addInvoker(adder: () -> Int = { add() }): Int {
-    val a: (Int) -> Int = { add(it) }
-    return adder()
-}
-
-fun add(num1: Int = 1, num2: Int = 1): Int {
-    return num1 + num2
-}
-
 class SelfReferenceTest {
     class SomeHolder(var x: Int,
                      val action: () -> Unit)
 
     @Test fun positive() {
-        val c = nullChar
         val expected = 100
 
         val s: SomeHolder = selfReference { SomeHolder(0) { self.x = expected } }

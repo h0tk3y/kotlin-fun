@@ -1,3 +1,4 @@
+package com.github.h0tk3y.kotlinFun
 
 import com.github.h0tk3y.kotlinFun.util.WeakIdentityHashMap
 import kotlin.reflect.KProperty
