@@ -30,7 +30,7 @@ class NullableFieldProperty<R, T>(val initializer: (R) -> T? = { null }) {
     }
 }
 
-class SynchronizedSafeFieldProperty<R, T : Any>(val initializer: (R) -> T = { throw IllegalStateException("Not initialized.") }) {
+class SynchronizedFieldProperty<R, T : Any>(val initializer: (R) -> T = { throw IllegalStateException("Not initialized.") }) {
     private val map = WeakIdentityHashMap<R, T>()
 
     operator fun getValue(thisRef: R, property: KProperty<*>): T = synchronized(map) {
