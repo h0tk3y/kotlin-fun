@@ -8,7 +8,7 @@ import kotlin.reflect.KProperty
 
 class FieldProperty<R, T : Any>(val synchronized: Boolean = false,
                                 val initializer: (R) -> T = { throw IllegalStateException("Not initialized.") }) {
-    val map = WeakIdentityHashMap<R, T>().let { if (synchronized) Collections.synchronizedMap(it) else it }
+    private val map = WeakIdentityHashMap<R, T>().let { if (synchronized) Collections.synchronizedMap(it) else it }
 
     operator fun getValue(thisRef: R, property: KProperty<*>): T =
             map[thisRef] ?: setValue(thisRef, property, initializer(thisRef))
@@ -21,7 +21,7 @@ class FieldProperty<R, T : Any>(val synchronized: Boolean = false,
 
 class NullableFieldProperty<R, T>(val synchronized: Boolean = false,
                                   val initializer: (R) -> T? = { null }) {
-    val map = WeakIdentityHashMap<R, T>().let { if (synchronized) Collections.synchronizedMap(it) else it }
+    private val map = WeakIdentityHashMap<R, T>().let { if (synchronized) Collections.synchronizedMap(it) else it }
 
     operator fun getValue(thisRef: R, property: KProperty<*>): T? =
             map[thisRef] ?: setValue(thisRef, property, initializer(thisRef))
