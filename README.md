@@ -11,19 +11,19 @@ But sometimes it is necessary, e.g. for callbacks.
 
 There is a workaround with the following usage:
 
-    val c: com.github.h0tk3y.kotlinFun.MyClass = com.github.h0tk3y.kotlinFun.selfReference { com.github.h0tk3y.kotlinFun.MyClass(someParams) { println(self.someField); } }
+    val c: MyClass = selfReference { MyClass(someParams) { println(self.someField); } }
     
 Here, `self` is a *magic* reference to a value which is not constructed yet.
 
 ## Sequence chaining
 
-* `com.github.h0tk3y.kotlinFun.modifyPrefix` takes the original sequence and applies an operator to its prefix, leaving the
+* `modifyPrefix` takes the original sequence and applies an operator to its prefix, leaving the
  tail unchanged, if any;
 
-* `com.github.h0tk3y.kotlinFun.chain` transforms the sequence by chaining the results of the operators, each called on what's left of the sequence  
+* `chain` transforms the sequence by chaining the results of the operators, each called on what's left of the sequence  
  after the previous one;
  
-* `com.github.h0tk3y.kotlinFun.lazyChain` is the same but concatenation is done lazily and no sequence objects are created until their items item are
+* `lazyChain` is the same but concatenation is done lazily and no sequence objects are created until their items item are
  requested;
   
 * operator for concatenating a sequence with lambda that provides a sequence.
@@ -32,9 +32,9 @@ Here, `self` is a *magic* reference to a value which is not constructed yet.
 
     val seq = (1..5).asSequence()
     
-    val prefixModified = seq.com.github.h0tk3y.kotlinFun.modifyPrefix { drop(1).take(2).map { -it } } // -2, -3, 4, 5 
+    val prefixModified = seq.modifyPrefix { drop(1).take(2).map { -it } } // -2, -3, 4, 5 
     
-    val chained = seq.com.github.h0tk3y.kotlinFun.chain(
+    val chained = seq.chain(
         { sequenceOf(-1, 0) }
         { take(2).map { it + 100 } }
         { map { it * 100 } }
