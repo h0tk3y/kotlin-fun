@@ -3,14 +3,14 @@ package com.github.h0tk3y.kotlinFun
 import org.junit.Assert.*
 import org.junit.Test
 
-class MyClass(val name: String)
+class MyClass(@JvmField val name: String)
 
 var MyClass.uninitializedTag: String by FieldProperty()
 
-val propertyHolderMyClassSharedTag = FieldProperty<MyClass, String> { it.name.reversed() }
+val propertyHolderMyClassSharedTag = FieldProperty<MyClass, String> { name.reversed() }
 
 class PropertyHolder() {
-    var MyClass.innerTag: String by FieldProperty { it.name }
+    var MyClass.innerTag: String by FieldProperty { name }
     var MyClass.sharedTag: String by propertyHolderMyClassSharedTag
 
     fun getInner(c: MyClass) = c.innerTag
@@ -51,7 +51,7 @@ class FieldPropertyTest {
         assertEquals(c2.uninitializedTag, c1.uninitializedTag)
     }
 
-    var MyClass.nullableTag: String? by NullableFieldProperty { it.name }
+    var MyClass.nullableTag: String? by NullableFieldProperty { name }
 
     @Test
     fun testNullableReassignment() {

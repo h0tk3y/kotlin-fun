@@ -1,16 +1,8 @@
 package com.github.h0tk3y.kotlinFun
 
-import com.github.h0tk3y.kotlinFun.chain
-import com.github.h0tk3y.kotlinFun.lazyChain
-import com.github.h0tk3y.kotlinFun.modifyPrefix
-import com.github.h0tk3y.kotlinFun.plus
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
-
-/**
- * Created by igushs on 4/9/16.
- */
 
 class SequenceChainingTest {
 
@@ -32,11 +24,18 @@ class SequenceChainingTest {
         assertEquals(listOf(0, -1, -2, -3, 8, 10), result)
     }
 
+    @Test fun notTakingIterator() {
+        val seq = (1..5).asSequence().constrainOnce()
+        seq.chain({ this })
+
+        seq.toList()
+    }
+
     @Test fun lazyPlus() {
         fun primes(): Sequence<Int> {
-            fun primesFilter(from: Sequence<Int>): Sequence<Int> = from.iterator().let {
-                val current = it.next()
-                sequenceOf(current) + { primesFilter(it.asSequence().filter { it % current != 0 }) }
+            fun primesFilter(from: Sequence<Int>): Sequence<Int> = with(from.iterator()) {
+                val current = next()
+                sequenceOf(current) + { primesFilter(asSequence().filter { it % current != 0 }) }
             }
             return primesFilter((2..Int.MAX_VALUE).asSequence())
         }

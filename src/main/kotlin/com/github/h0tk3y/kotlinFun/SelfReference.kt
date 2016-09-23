@@ -1,13 +1,11 @@
 package com.github.h0tk3y.kotlinFun
 
 /**
- * Created by igushs on 1/29/16.
- *
  * Provides initializers an ability to reference the variable in lambdas and object expressions.
  */
-class SelfReference<T>(val initializer: SelfReference<T>.() -> T) {
+class SelfReference<T> internal constructor(initializer: SelfReference<T>.() -> T) {
     val self: T by lazy {
-        inner ?: throw IllegalStateException("Do not use `value` until `initializer` finishes.")
+        inner ?: throw IllegalStateException("Do not use `self` until `initializer` finishes.")
     }
 
     private val inner = initializer()
