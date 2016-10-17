@@ -4,12 +4,18 @@ You know, writing code in Kotlin is a lot of `fun`.
 
 Here you may find some useful stuff written while playing around. Contributions are welcome.
 
+## Usage
+
+You can use the project as a Gradle, Maven or SBT dependency:
+
+[![](https://jitpack.io/v/h0tk3y/kotlin-fun.svg)](https://jitpack.io/#h0tk3y/kotlin-fun)
+
 ## Self-reference
 
 Kotlin has no ability to reference a variable which is not initialized inside its constructor.
 But sometimes it is necessary, e.g. for callbacks.
 
-There is a workaround with the following usage:
+Here is a workaround with the following usage:
 
     val c: MyClass = selfReference { MyClass(someParams) { println(self.someField); } }
     
