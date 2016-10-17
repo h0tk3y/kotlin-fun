@@ -75,3 +75,56 @@ Can be used to create inner mapping distinct for instances of enclosing class:
         
         // ...
     }    
+    
+## Lexicographical comparator
+
+Given a `Comparator<T>`, creates a `Comparator<in Iterable<T>>`, that compares iterables lexicographically:
+
+    val natural = naturalOrder<Int>()
+    val comparator = natural.lexicographically()
+    
+    comparator.compare(listOf(1, 2, 3), listOf(1, 2, 3, 4)) // -1
+    comparator.compare(listOf(1, 2, 4), listOf(1, 2, 3, 4)) // 1
+    
+## Comparator context
+
+Allows you to use comparison operators `<`, `>`, `<=`, `>=` when you have a comparator for the corresponding type. 
+
+    val compareBySizes = compareBy<List<*>> { it.size }
+    
+    compareBySize.withOperators {
+        println(listOf(1) < listOf(1, 2)) // true
+        println(listOf(1, 2, 3) >= listOf(3, 2, 1)) // true
+    }
+
+Cannot be used for `Comparator<Comparable<T>>` because of the operators being extension functions.
+    
+## Var with observable setter
+
+Provides a property delegate with Swift-style `didSet` and `willSet` observers, and a type-safe builder for it, that allows you to add any one of `didSet` and `willSet` or both:
+
+    var x: Int by varWithObservableSetter(5).willSet { println("before") }.didSet { println("after") }
+    
+    var y: String by varWithObservableSetter("abc").didSet { println("after") }
+    
+## Events
+
+C#-like events with handlers subscription. Supports adding a fire-once handler. Handler functions can receive zero to three arguments.
+
+    val e = event0()
+    e.addHandler { println("triggered!") }
+    e.trigger() // triggered!
+    
+    val tick = event2<Int, String>()
+    val f = { code, tag -> print("$code $tag " }
+    e.addHandler(f)
+    e.handleOnce { code, tag -> println(code + tag.length) }
+    e.trigger(1, "abc") // 1 abc 4
+    e.trigger(2, "def") // 2 def
+    e.removeHandler(f)
+    e.trigger(3, "xyz") //
+    
+To avoid exposing `trigger()` function to 3rd party code, use `.asHandlersCollector()`
+
+    private val e = event1<String>()
+    val event: HandlersCollector<(String) -> Unit> get() = e.asHandlersCollector()
