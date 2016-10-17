@@ -61,7 +61,6 @@ class FieldPropertyTest {
         assertNull(c.nullableTag)
     }
 
-
     @Test
     fun innerVsShared() {
         val p1 = PropertyHolder()

@@ -24,3 +24,12 @@ dependencies {
     testCompile 'org.jetbrains.spek:spek-api:1.0.89'
     testRuntime 'org.jetbrains.spek:spek-junit-platform-engine:1.0.89'
 }
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives sourcesJar
+}
