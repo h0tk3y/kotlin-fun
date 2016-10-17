@@ -2,10 +2,6 @@ package com.github.h0tk3y.kotlinFun
 
 import java.util.*
 
-/**
- * Created by igushs on 9/30/16.
- */
-
 interface HandlersCollector<F : Function<Unit>> {
     fun addHandler(handler: F)
     fun handleOnce(handler: F)
