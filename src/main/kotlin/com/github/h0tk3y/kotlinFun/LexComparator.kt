@@ -12,8 +12,8 @@ import java.util.*
  * consistent with equals.
  */
 fun <T> Comparator<in T>.lexicographically(): Comparator<in Iterable<T>> = Comparator { o1, o2 ->
-    val iterator1 = o1!!.iterator()
-    val iterator2 = o2!!.iterator()
+    val iterator1 = o1.iterator()
+    val iterator2 = o2.iterator()
 
     while (true) {
         if (!iterator1.hasNext()) return@Comparator if (!iterator2.hasNext()) 0 else -1
